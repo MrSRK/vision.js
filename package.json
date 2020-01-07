@@ -1,0 +1,31 @@
+{
+  "name": "vision.js",
+  "version": "1.0.0",
+  "description": "Υποτυπώδες CMS δομημένο σε Node.js για την ανάπτυξη μικρών εταιρικών σελίδων.",
+  "main": "app.js",
+  "scripts": {
+    "test": "debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSRK/vision.js.git"
+  },
+  "keywords": [
+    "Node.js",
+    "MongoDB",
+    "Express.js",
+    "Pug",
+    "Mongoose",
+    "Angular.js",
+    "Bootstraps4",
+    "jQuery",
+    "REST",
+    "MVC"
+  ],
+  "author": "Mr.S.R.K.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrSRK/vision.js/issues"
+  },
+  "homepage": "https://github.com/MrSRK/vision.js#readme"
+}
