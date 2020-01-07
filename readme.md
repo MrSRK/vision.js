@@ -9,9 +9,10 @@
 
 ## Core
 
-* `Core` - [Vision.js](https://github.com/MrSRK/vision.js)
+* `Core` - [Vision.js](https://github.com/MrSRK/vision.js) 
 ```
 https://github.com/MrSRK/vision.js
 ```
+
 ## Modules
 
