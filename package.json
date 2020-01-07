@@ -1,5 +1,5 @@
 {
-  "name": "vision.js",
+  "name": "cms-vision.js",
   "version": "1.0.0",
   "description": "Υποτυπώδες CMS δομημένο σε Node.js για την ανάπτυξη μικρών εταιρικών σελίδων.",
   "main": "app.js",
