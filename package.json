@@ -1,50 +1,63 @@
 {
-  "name": "cms-vision.js",
-  "version": "1.0.0",
-  "description": "Υποτυπώδες CMS δομημένο σε Node.js για την ανάπτυξη μικρών εταιρικών σελίδων.",
-  "main": "app.js",
-  "scripts": {
-    "test": "debug"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MrSRK/vision.js.git"
-  },
-  "keywords": [
-    "Node.js",
-    "MongoDB",
-    "Express.js",
-    "Pug",
-    "Mongoose",
-    "Angular.js",
-    "Bootstraps4",
-    "jQuery",
-    "REST",
-    "MVC"
-  ],
-  "author": "Mr.S.R.K.",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/MrSRK/vision.js/issues"
-  },
-  "homepage": "https://github.com/MrSRK/vision.js#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "chalk": "^3.0.0",
-    "connect-mongo": "^3.2.0",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^8.2.0",
-    "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "http2": "^3.3.7",
-    "lusca": "^1.6.1",
-    "mongoose": "^5.8.5",
-    "mongoose-schema-jsonschema": "^1.2.1",
-    "morgan": "^1.9.1",
-    "multer": "^1.4.2",
-    "node-sass-middleware": "^0.11.0",
-    "pug": "^2.0.4",
-    "rotating-file-stream": "^2.0.1"
-  }
+	"name": "vision.js",
+	"version": "1.0.0",
+	"description": "Υποτυπώδες CMS δομημένο σε Node.js για την ανάπτυξη μικρών εταιρικών σελίδων.",
+	"main": "app.js",
+	"scripts": {
+		"test": "node app"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MrSRK/vision.js"
+	},
+	"keywords": [
+		"Node.js",
+		"MongoDB",
+		"Express.js",
+		"Pug",
+		"Mongoose",
+		"Angular.js",
+		"Bootstraps4",
+		"jQuery",
+		"REST",
+		"MVC"
+	],
+	"author": "Mr.S.R.K. sys.",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/MrSRK/vision.js/issues"
+	},
+	"homepage": "https://github.com/MrSRK/vision.js#readme",
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.10.2",
+		"angular": "^1.7.9",
+		"bcrypt-nodejs": "0.0.3",
+		"body-parser": "^1.19.0",
+		"bootstrap": "^4.3.1",
+		"chalk": "^2.4.2",
+		"compression": "^1.7.4",
+		"connect-mongo": "^3.0.0",
+		"cookie-parser": "^1.4.4",
+		"dotenv": "^8.1.0",
+		"errorhandler": "^1.5.1",
+		"express": "^4.17.1",
+		"express-session": "^1.16.2",
+		"express-status-monitor": "^1.2.8",
+		"jquery": "^3.4.1",
+		"jsonwebtoken": "^8.5.1",
+		"lusca": "^1.6.1",
+		"mongoose": "^5.6.12",
+		"mongoose-schema-jsonschema": "^1.2.1",
+		"morgan": "^1.9.1",
+		"multer": "^1.4.2",
+		"node-sass-middleware": "^0.11.0",
+		"popper.js": "^1.15.0",
+		"pug": "^2.0.4",
+		"rotating-file-stream": "^1.4.3",
+		"sharp": "^0.23.1",
+		"webp-converter": "^2.2.3"
+	},
+	"devDependencies": {
+		"eslint": "^6.4.0"
+	}
 }

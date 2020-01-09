@@ -1,4 +1,8 @@
-node_modules
+node_modules/
+temp/
+log/
+*.psd
+*.cdr
+*.webp
+uploads/
 *.css
-log
-*.log

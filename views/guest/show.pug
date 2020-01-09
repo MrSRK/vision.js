@@ -1,0 +1,81 @@
+extends ../layout
+block content
+	.mt-5(data-ng-init="setRoute('"+root+"')")
+		div(data-ng-init="getSingle('"+_id+"')")
+			.row
+				.col
+					h2.mb-0(data-ng-if="data.mpn")
+						small.mr-2 MPN:
+						span.text-primary(data-ng-bind="data.mpn")
+					h6(data-ng-if="data.code")
+						small.mr-2 SKU:
+						span.text-primary(data-ng-bind="data.code")
+					picture(data-ng-if="data.images&&data.images.length>0")
+						source(type="image/webp",data-ng-srcset="/images/"+root+"/{{data._id+'/'+data.images[0].webp}}")
+						img.img-fluid(data-ng-src="/images/"+root+"/{{data._id+'/'+data.images[0].filename}}")
+					.text-left
+						p.mb-0(data-ng-id="data.createdAt")
+							small.mr-3.text-muted Created At:
+							small(data-ng-bind="data.createdAt | date:'dd/MM/yyyy'")
+						p.mb-0(data-ng-id="data.updatedAt")
+							small.mr-3.text-muted Updated At:
+							small(data-ng-bind="data.updatedAt | date:'dd/MM/yyyy'")
+				.col
+					h2.text-primary(data-ng-bind="data.name")
+					p.d-print-none
+						strong.mr-2 Status:
+						span.text-success.mr-1(data-ng-if="data.active")
+							span.mr-1 &#10687;
+							span Active
+						span.text-warning(data-ng-if="!data.active")
+							span.mr-1 &#10686;
+							span Inactive
+					p.d-print-none(data-ng-if="data.price")
+						strong.mr-1  Ενδεικτική τιμή
+						span(data-ng-bind="data.price.toFixed(2)")
+						span &euro;
+					p(data-ng-if="data.description")
+						strong.mr-1 Description:
+						span(data-ng-bind="data.description")
+					.row.mb-3(data-ng-if="data.size")
+						.col-12
+							h6.text-primary Size
+						.col-1.px-1(data-ng-repeat="rec in data.size")
+							.cart.border
+								.text-center.small.text-muted(data-ng-bind="rec.code")
+					.row(data-ng-if="data.fabric")
+						.col-12
+							h6.text-primary Fabric
+						.col-4(data-ng-repeat="rec in data.fabric")
+							.cart
+								picture(data-ng-if="rec.images&&rec.images.length>0")
+									source(type="image/webp",data-ng-srcset="/images/fabric/{{rec._id+'/'+rec.images[0].webp}}")
+									img.card-img-top.p-2(data-ng-src="/images/fabric/{{rec._id+'/'+rec.images[0].filename}}")
+								.card-body.py-2
+									.text-center.small.text-muted(data-ng-bind="rec.code")
+									.text-center.small.text-info(data-ng-bind="rec.name")
+									.row(data-ng-if="data.fabric.color")
+										.col(data-ng-repeat="r in data.fabric.color")
+											span {{r.name}}
+					.row(data-ng-if="data.addon")
+						.col-12
+							h6.text-primary Addon
+						.col-4(data-ng-repeat="rec in data.addon")
+							.cart
+								picture(data-ng-if="rec.images&&rec.images.length>0")
+									source(type="image/webp",data-ng-srcset="/images/addon/{{rec._id+'/'+rec.images[0].webp}}")
+									img.card-img-top.p-2(data-ng-src="/images/addon/{{rec._id+'/'+rec.images[0].filename}}")
+								.card-body.py-2
+									.text-center.small.text-muted(data-ng-bind="rec.code")
+									.text-center.small.text-info(data-ng-bind="rec.name")
+					.row(data-ng-if="data.style")
+						.col-12
+							h6.text-primary Style
+						.col-4(data-ng-repeat="rec in data.style")
+							.cart
+								picture(data-ng-if="rec.images&&rec.images.length>0")
+									source(type="image/webp",data-ng-srcset="/images/style/{{rec._id+'/'+rec.images[0].webp}}")
+									img.card-img-top.p-2(data-ng-src="/images/style/{{rec._id+'/'+rec.images[0].filename}}")
+								.card-body.py-2
+									.text-center.small.text-muted(data-ng-bind="rec.code")
+									.text-center.small.text-info(data-ng-bind="rec.name")

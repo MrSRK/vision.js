@@ -1,0 +1,20 @@
+extends layout
+block content
+	.row
+		.col-12.col-lg-4
+		.col-12.col-lg-4
+			.my-4(data-ng-init="setRoute('"+root+"')")
+				h1.h2.text-center.pb-5 Administrator Login
+				include partials/alerts
+				form(data-ng-submit="signIn(authModel)")
+					.form-group
+						label.text-capitalize(for='login-email') Email
+						input.form-control(type='email',id='login-email',data-ng-model="data.email",placeholder="Administrator's E-mail",autocomplete="email")
+					.form-group
+						label.text-capitalize(for='login-password') Password
+						input.form-control(type='password',id='login-password',data-ng-model="data.password",placeholder="Administrator's Password",autocomplete="current-password")
+					.text-right.pt-3
+						button.btn.btn-primary(type='submit',ng-disabled="disabled")
+							i.fas.fa-key.mr-2
+							strong Sign In
+		.col-12.col-lg-4

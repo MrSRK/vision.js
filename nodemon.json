@@ -1,4 +1,4 @@
 {
   "verbose": false,
-  "ignore": ["/public/*", "npm-debug.log", "node_modules/*","log/*.log"]
+  "ignore": ["/public/*", "node_modules/*","log/*"]
 }
