@@ -37,6 +37,7 @@
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "http2": "^3.3.7",
     "lusca": "^1.6.1",
     "mongoose": "^5.8.5",
     "mongoose-schema-jsonschema": "^1.2.1",
