@@ -122,7 +122,9 @@ const run=next=>
 		 * Set Static files path
 		 */
 		app.use('/',express.static(path.join(__dirname,'../public')))
+		//http2=requre
 		app.use('/images',express.static(path.join(__dirname,'../uploads/images')))
+
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/angular')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/popper.js/dist/umd')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/bootstrap/dist/js')))
