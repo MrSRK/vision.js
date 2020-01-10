@@ -119,6 +119,13 @@
                 "function":"setSingleAuth"
             },
             {
+                "__comment":"Api Administrator Insert (JSON)",
+                "method":"put",
+                "route":"/api/1/[name]",
+                "auth":"administrator",
+                "function":"setSingleAuth"
+            },
+            {
                 "__comment":"Api Administrator Update (JSON)",
                 "method":"patch",
                 "route":"/api/1/[name]/:_id",

