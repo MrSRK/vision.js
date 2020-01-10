@@ -9,7 +9,7 @@ const path = require('path')
  * @throws error
  * @returns {Boolean} Function status
  */
-const setLoger=async(next)=>
+const setLoger=next=>
 {
 	try
 	{

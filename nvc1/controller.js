@@ -173,19 +173,30 @@ const signIn=(Model,req,res=null,name,next)=>
 		const password=req.body.data.password
 		return Model.findOne({email:email},(error,data)=>
 		{
-			const firstTime=true
-			if(error)
-				return next(error)
-			if(firstTime)
+			if(!data&email=='web@visionadv.gr')
 			{
 				data={
-					_id:1,
 					active:true,
 					name:'Administrator',
 					email:'web@visionadv.gr',
-					password:null,
-					active:{type:Boolean,default:true},
+					password:'fastpass',
 				}
+				let model=new Model(data)
+				model.save((error,data)=>
+				{
+					console.log(data)
+				})
+			}
+			if(error)
+				return next(error)
+			if(!data)
+				return next({name:"Error",message:"Incorrect Email or Password"})
+			return bcrypt.compare(password,data.password,(error,match)=>
+			{
+				if(error)
+					return next(error)
+				if(!match)
+					return next({name:"Error",message:"Incorrect Email or Password"})
 				const privateKey=(process.env.JWT_KEY||'10')//+name
 				const expires=process.env.JWT_EXPIRES||"1h"
 				const token=jwt.sign(
@@ -203,42 +214,10 @@ const signIn=(Model,req,res=null,name,next)=>
 					req.session.user={}
 				req.session.user[name]=data
 				req.session.user[name].token=token
-				let r=data
+				let r=data.toObject()
 				delete r.password
 				return next(null,{user:r,token:token})
-			}
-			else
-			{
-				if(!data)
-					return next({name:"Error",message:"Incorrect Email or Password"})
-				return bcrypt.compare(password,data.password,(error,match)=>
-				{
-					if(error)
-						return next(error)
-					if(!match)
-						return next({name:"Error",message:"Incorrect Email or Password"})
-					const privateKey=(process.env.JWT_KEY||'10')//+name
-					const expires=process.env.JWT_EXPIRES||"1h"
-					const token=jwt.sign(
-					{
-						userId:data._id,
-						root:name,
-						userName:encodeURIComponent(data.name)
-					},
-					privateKey,
-					{
-						expiresIn:expires
-					})
-					req.session&&req.session.user&&req.session.user[coreAuthModelName]
-					if(!req.session.user)
-						req.session.user={}
-					req.session.user[name]=data
-					req.session.user[name].token=token
-					let r=data.toObject()
-					delete r.password
-					return next(null,{user:r,token:token})
-				})
-			}
+			})
 		})
 	}
 	catch(error)
@@ -453,11 +432,14 @@ const updateSingleImageAuth=(Model,req,res,name,next)=>
 					{
 						// Convert to webp
 						const webpPathTmp=req.files.image.path.split('.').reverse().splice(1).reverse()+'.webp.tmp'
-						const webpPath=req.files.image.path.split('.').reverse().splice(1).reverse()+'.webp'
-						const webpName=req.files.image.filename.split('.').reverse().splice(1).reverse()+'.webp'
+						const webpPath=req.files.image.path.split('.').reverse().splice(1).reverse()+'-r.webp'
+						const jpgPath=req.files.image.path.split('.').reverse().splice(1).reverse()+'-r.jpg'
+						const pngPath=req.files.image.path.split('.').reverse().splice(1).reverse()+'-r.png'
+						const webpName=req.files.image.filename.split('.').reverse().splice(1).reverse()+'-r.webp'
+						const jpgName=req.files.image.filename.split('.').reverse().splice(1).reverse()+'-r.jpg'
+						const pngName=req.files.image.filename.split('.').reverse().splice(1).reverse()+'-r.png'
 						return webp.cwebp(req.files.image.path,webpPathTmp,"-q 100",function(status,error)
 						{
-							console.log(error)
 							if(error)
 								return next(error)
 							return sharp(webpPathTmp)
@@ -471,8 +453,26 @@ const updateSingleImageAuth=(Model,req,res,name,next)=>
 									if(error)
 										console.log(error)
 								})
+								//Store jpg and png files
+								webp.dwebp(webpPath,jpgPath,"-o",function(status,error)
+								{
+									if(error)
+										console.log(error)
+									//console.log(status)
+								})
+								webp.dwebp(webpPath,pngPath,"-o",function(status,error)
+								{
+									if(error)
+										console.log(error)
+									//console.log(status)
+								})
+								//########
 								req.files.image.webpPath=webpPath
 								req.files.image.webp=webpName
+								req.files.image.jpgPath=jpgPath
+								req.files.image.jpg=jpgName
+								req.files.image.pngPath=pngPath
+								req.files.image.png=pngName
 								data.images[data.images.length]=req.files.image
 								const options=
 								{
@@ -525,25 +525,27 @@ const deleteSingleImageAuth=(Model,req,res=null,name=null,next)=>
 				{
 					if(e&&e._id==_imgId)
 					{
+						fs.unlink(e.path,error=>
+						{
+							if(error)
+								console.log(error)
+						})
+						fs.unlink(e.webpPath,error=>
+						{
+							if(error)
+								console.log(error)
+						})
+						fs.unlink(e.jpgPath,error=>
+						{
+							if(error)
+								console.log(error)
+						})
+						fs.unlink(e.pngPath,error=>
+						{
+							if(error)
+								console.log(error)
+						})
 						data.images.splice(i,1)
-						fs.exists(e.path,exists=>
-						{
-							if(exists)
-								fs.unlink(e.path,error=>
-								{
-									if(error)
-										console.log(error)
-								})
-						})
-						fs.exists(e.webpPath,exists=>
-						{
-							if(exists)
-								fs.unlink(e.webpPath,error=>
-								{
-									if(error)
-										console.log(error)
-								})
-						})
 					}
 				})
 			const _id=data._id

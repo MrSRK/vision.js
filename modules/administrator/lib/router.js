@@ -75,8 +75,6 @@ const route=menu=>
 				else
 					router[r.method](r.route.replace('[name]',name),auth[r.auth+'Api'],(req,res)=>
 					{
-						console.log(controller)
-						console.log(r.function)
 						return controller[r.function](req,res,name,(error,data)=>
 						{
 							if(error)

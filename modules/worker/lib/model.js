@@ -11,6 +11,10 @@ const image=mongoose.Schema({
 	path:{type:String},
 	webp:{type:String},
 	webpPath:{type:String},
+	jpg:{type:String},
+	jpgPath:{type:String},
+	png:{type:String},
+	pngPath:{type:String},
 	size:{type:Number},
 })
 const schema=new mongoose.Schema({
@@ -18,10 +22,7 @@ const schema=new mongoose.Schema({
 	name:{type:String},
 	email:{type:String,required:true},
 	password:{type:String,required:true},
-	images:[image],
-	leave_common:{type:Number,default:21},
-	leave_medical:{type:Number,default:0},
-	leave_spesial:{type:Number,default:0},
+	images:[image]
 },
 {
 	timestamps:true,

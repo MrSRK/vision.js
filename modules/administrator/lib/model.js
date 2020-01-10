@@ -17,6 +17,10 @@ const image=mongoose.Schema({
 	path:{type:String},
 	webp:{type:String},
 	webpPath:{type:String},
+	jpg:{type:String},
+	jpgPath:{type:String},
+	png:{type:String},
+	pngPath:{type:String},
 	size:{type:Number},
 })
 /**

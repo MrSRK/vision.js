@@ -18,81 +18,76 @@ const route=next=>
 	try
 	{
 		const auth=controller.authFunctionsObject('administrator')
-		loadNvc1Routers(error=>
+		loadRouters(error=>
 		{
 			if(error)
-				throw(error)
-			loadRouters(error=>
+				throw(error,null)
+			let menu=[]
+			routes.forEach(r=>{
+				menu[menu.length]=r.name
+			})
+			router.get('/',(req,res)=>
 			{
-				if(error)
-					throw(error,null)
-				let menu=[]
-				routes.forEach(r=>{
-					menu[menu.length]=r.name
+				return res.status(200).render('home',{
+					title:'Home Page',
+					menu:menu
 				})
-				router.get('/',(req,res)=>
-				{
-					return res.status(200).render('home',{
-						title:'Home Page',
-						menu:menu
-					})
+			})
+			router.get('/administrator',auth['administrator'],(req,res)=>
+			{
+				return res.status(200).render('administrator/home',{
+					title:'Dashboard',
+					menu:menu
 				})
-				router.get('/administrator',auth['administrator'],(req,res)=>
+			})
+			router.get('/api',(req,res)=>
+			{
+				let r=[]
+				menu.forEach(m=>
 				{
-					return res.status(200).render('administrator/home',{
-						title:'Dashboard',
-						menu:menu
-					})
+					r[r.length]={
+						name:m,
+						path:'/'+m,
+					}
 				})
-				router.get('/api',(req,res)=>
-				{
-					let r=[]
-					menu.forEach(m=>
-					{
-						r[r.length]={
-							name:m,
-							path:'/'+m,
-						}
-					})
-					return res.status(200).json({status:true,error:null,message:'Welcome to API',routes:r})
+				return res.status(200).json({status:true,error:null,message:'Welcome to API',routes:r})
 
-				})
-				const config={
-					healthChecks:[
-					{
-						protocol: 'http',
-						host: 'localhost',
-						port: '80',
-						path: '/'
-					},
-					{
-						protocol: 'http',
-						host: 'localhost',
-						port: '80',
-						path: '/api'
-					},
-					{
-						protocol: 'http',
-						host: 'localhost',
-						port: '80',
-						path: '/administrator'
-					}]
-				}
-				const statusMonitor=expressStatusMonitorrequire(config)
-				router.use(statusMonitor)
-				router.get('/administrator/status',auth['administrator'],statusMonitor.pageRoute)
-				routes.forEach(r=>
+			})
+			const config={
+				healthChecks:[
 				{
-					let ro=require(r.path)
-					ro.setCoreController(controller)
-					ro.route(menu)
-					router.use(ro.router())
-				})
-				router.get('*',(req,res)=>
+					protocol: 'http',
+					host: 'localhost',
+					port: '80',
+					path: '/'
+				},
 				{
-					return res.status(404).render('404',{
-						title:'404'
-					})
+					protocol: 'http',
+					host: 'localhost',
+					port: '80',
+					path: '/api'
+				},
+				{
+					protocol: 'http',
+					host: 'localhost',
+					port: '80',
+					path: '/administrator'
+				}]
+			}
+			const statusMonitor=expressStatusMonitorrequire(config)
+			router.use(statusMonitor)
+			router.get('/administrator/status',auth['administrator'],statusMonitor.pageRoute)
+			routes.forEach(r=>
+			{
+				let ro=require(r.path)
+				ro.setCoreController(controller)
+				ro.route(menu)
+				router.use(ro.router())
+			})
+			router.get('*',(req,res)=>
+			{
+				return res.status(404).render('404',{
+					title:'404'
 				})
 			})
 		})
@@ -114,7 +109,8 @@ const loadRouters=next=>
 {
 	try
 	{
-		let nvc1ModulesPath=path.join(__dirname, '../modules')
+		const p=process.env.NVC1_MODULE_PATH || './modules'
+		const nvc1ModulesPath=path.join(process.mainModule.path,p)
 		fs.exists(nvc1ModulesPath,exists=>
 		{
 			if(exists)
@@ -135,42 +131,6 @@ const loadRouters=next=>
 	}
 	catch(error)
 	{
-		return next(error)
-	}
-}
-/**
- * Collect all routes (from nvc1 modules) and add return them
- * @param {Function} next Callback function
- * @callback function(error,data)
- * @throws error
- * @returns {Boolean} Function status
- */
-const loadNvc1Routers=next=>
-{
-	try
-	{
-		let nvc1ModulesPath=path.join(__dirname, '../nvc1/modules')
-		fs.exists(nvc1ModulesPath,exists=>
-		{
-			if(exists)
-				fs.readdir(nvc1ModulesPath,(error,files)=>
-				{
-					if(error)
-						throw(error)
-					files.forEach(file=>
-					{
-						if(fs.existsSync(nvc1ModulesPath+'\\'+file+'\\index.js'))
-							routes[routes.length]={name:file,path:nvc1ModulesPath+'\\'+file+'\\index.js'}
-					})
-					return next(null)
-				})
-			else
-				return next(null)
-		})
-	}
-	catch(error)
-	{
-		console.log(error)
 		return next(error)
 	}
 }

@@ -1,12 +1,11 @@
 const cookieParser=require('cookie-parser')
 /**
- * @async
  * @param {Function} next Callback function
  * @callback function(error,data)
  * @throws error
  * @returns {Boolean} Function status
  */
-const __construct=async(next)=>
+const __construct=next=>
 {
 	try
 	{

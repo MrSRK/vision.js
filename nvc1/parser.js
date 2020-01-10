@@ -6,7 +6,7 @@ const bodyParser=require('body-parser')
  * @throws error
  * @returns {Boolean} Function status
  */
-const setJson=async(next)=>
+const setJson=next=>
 {
 	try
 	{
@@ -24,7 +24,7 @@ const setJson=async(next)=>
  * @throws error
  * @returns {Boolean} Function status
  */
-const setUrlEncoded=async(next)=>
+const setUrlEncoded=next=>
 {
 	try
 	{

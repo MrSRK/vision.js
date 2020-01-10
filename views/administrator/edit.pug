@@ -60,9 +60,11 @@ block content
 								.text-right
 									button.btn.btn-link.btn-sm.text-danger(type="button",data-ng-click="removeImage(image._id)")
 										i.fas.fa-trash-alt
-								picture
-									source(type="image/webp",data-ng-srcset="/images/"+root+"/"+_id+"/{{image.webp}}")
-									img.img-fluid(data-ng-src="/images/"+root+"/"+_id+"/{{image.filename}}")
+								a(download="{{image.originalname}}",href="/images/"+root+"/"+_id+"/{{image.filename}}")
+									picture
+										source(type="image/webp",data-ng-srcset="/images/"+root+"/"+_id+"/{{image.webp}}")
+										source(type="image/png",data-ng-srcset="/images/"+root+"/"+_id+"/{{image.png}}")
+										img.img-fluid(data-ng-src="/images/"+root+"/"+_id+"/{{image.jpg}}")
 				else
 					.row
 						.col-6

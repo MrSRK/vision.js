@@ -7,18 +7,21 @@ require('mongoose-schema-jsonschema')(mongoose);
  * @throws error
  * @returns {Boolean} Function status
  */
-const connect=async(next)=>
+const connect=next=>
 {
 	try
 	{
 		mongoose.set('useFindAndModify',false)
 		mongoose.set('useCreateIndex',true)
 		mongoose.set('useNewUrlParser',true)
-		mongoose.connect(process.env.MONGODB_URI)
-		return next(null,mongoose)
+		return mongoose.connect(process.env.MONGODB_URI,error=>
+		{
+			return next(error,mongoose)
+		})
 	}
 	catch(error)
 	{
+		console.log(error)
 		return next(error)
 	}
 
