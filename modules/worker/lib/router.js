@@ -51,14 +51,14 @@ exports.route=(menu)=>
 				else
 					router[r.method](r.route.replace('[name]',name),auth[r.auth+'Api'],(req,res)=>
 					{
-						return controller[r.function](req,res,name,(error,data)=>
+						return controller[r.function](req,res,name,(error,data,ld)=>
 						{
 							if(error)
-								return res.status(500).json({status:false,data:data,error:error})
+								return res.status(500).json({status:false,data:data,ld:ld,error:error})
 							if(!r.auth)
-								return res.status(200).json({status:true,data:data,error:error})
+								return res.status(200).json({status:true,data:data,ld:ld,error:error})
 							token=controller.refreshToken(req)
-							return res.status(200).json({status:true,token:token,data:data,error:error})
+							return res.status(200).json({status:true,token:token,data:data,ld:ld,error:error})
 						})
 					})
 			})

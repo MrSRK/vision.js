@@ -20,22 +20,14 @@ const setLoger=next=>
 			interval:'1d',
 			path:logDirectory
 		}
-		fs.exists(logDirectory,exists=>
+		const accessLogStream=rfs('access.log',options)
+		if(!fs.existsSync(logDirectory))
 		{
-			if(!exists)
-				fs.mkdir(logDirectory,{recursive:true},error=>
-				{
-					if(error)
-						throw(error)
-					const accessLogStream=rfs('access.log',options)
-					return next(null,morgan('combined',{stream:accessLogStream}))
-				})
-			else
-			{
-				const accessLogStream=rfs('access.log',options)
-				return next(null,morgan('combined',{stream:accessLogStream}))
-			}
-		})
+			fs.mkdirSync(logDirectory,{recursive:true})
+			return next(null,morgan('combined',{stream:accessLogStream}))
+		}
+		else
+			return next(null,morgan('combined',{stream:accessLogStream}))
 	}
 	catch(error)
 	{

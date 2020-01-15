@@ -6,6 +6,7 @@ const webp=require('webp-converter')
 const sharp=require('sharp')
 const ObjectId=require('mongoose').Types.ObjectId;
 const storage=require('./storage')
+const ld=require('./ld')
 /**
  * Default Core Module Authentication Name
  */
@@ -295,7 +296,9 @@ const getList=(Model,req=null,res=null,name,next)=>
 			select='-email -password'
 		return Model.find(null,select,(error,data)=>
 		{
-			return next(error,data)
+			if(data)
+				return next(error,data,ld.build('article-list',name,data))
+			return next(error,data,null)
 		})
 	}
 	catch(error)
@@ -386,7 +389,7 @@ const getSingleAuth=(Model,req,res=null,name=null,next)=>
 			return next({name:'Error',message:'Invalid ID'},null)
 		return Model.findById(_id,'-password',(error,data)=>
 		{
-			return next(error,data)
+			return next(error,data,null)
 		})
 	}
 	catch(error)
@@ -481,7 +484,7 @@ const updateSingleImageAuth=(Model,req,res,name,next)=>
 								}
 								return Model.findByIdAndUpdate(_id,data,options,(error,data)=>
 								{
-									return next(error,data)
+									return next(error,data,null)
 								})
 							})
 						})
@@ -559,7 +562,7 @@ const deleteSingleImageAuth=(Model,req,res=null,name=null,next)=>
 			}
 			return Model.findByIdAndUpdate(_id,data,options,(error,data)=>
 			{
-				return next(error,data)
+				return next(error,data,null)
 			})
 		})
 	}
@@ -592,11 +595,11 @@ const setSingleAuth=(Model,req,res=null,name=null,next)=>
 		return model.save((error,data)=>
 		{
 			if(error)
-				return next(error,data)
+				return next(error,data,null)
 			var data=data.toObject()
 			if(data.password)
 			delete data.password
-			return next(error,data)
+			return next(error,data,null)
 		})
 	}
 	catch(error)
@@ -633,7 +636,7 @@ const updateSingleAuth=(Model,req,res=null,name=null,next)=>
 		}
 		return Model.findByIdAndUpdate(_id,data,options,(error,data)=>
 		{
-			return next(error,data)
+			return next(error,data,null)
 		})
 	}
 	catch(error)
@@ -679,7 +682,7 @@ const updateSinglePasswordAuth=(Model,req,res=null,name=null,next)=>
 				}
 				return Model.findByIdAndUpdate(_id,{password:data.password},options,(error,data)=>
 				{
-					return next(error,data)
+					return next(error,data,null)
 				})
 			})
 		})
@@ -720,7 +723,7 @@ const deleteSingleAuth=(Model,req,res=null,name=null,next)=>
 				if(error)
 					console.log(error,null)
 			});
-			return next(error,data)
+			return next(error,data,null)
 		})
 	}
 	catch(error)

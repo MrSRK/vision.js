@@ -20,9 +20,11 @@ block content
 				.col.col-2.align-self-center.small.text-muted.text-left.d-none.d-lg-block
 					small(data-ng-bind="rec._id")
 				.col.col-1.d-none.d-lg-block.align-self-center.text-info.px-2
-					picture(data-ng-if="rec.images&&rec.images[0]")
-						source(type="image/webp",data-ng-srcset="/images/"+root+"/{{rec._id+'/'+rec.images[0].webp}}")
-						img.img-fluid(data-ng-src="/images/"+root+"/{{rec._id+'/'+rec.images[0].filename}}")
+					a(target="_blank",href="/images/"+root+"/{{rec._id+'/'+rec.images[0].filename}}")
+						picture(data-ng-if="rec.images&&rec.images[0]")
+							source(type="image/webp",data-ng-srcset="/images/"+root+"/{{rec._id+'/'+rec.images[0].webp}}")
+							source(type="image/png",data-ng-srcset="/images/"+root+"/{{rec._id+'/'+rec.images[0].png}}")
+							img.img-fluid(data-ng-src="/images/"+root+"/{{rec._id+'/'+rec.images[0].jpg}}")
 				.col.col-md-3.col-lg-4.align-self-center.text-info
 					small(data-ng-bind="rec.name")
 					small(data-ng-if="rec.company",data-ng-bind="' ('+rec.company+')'")

@@ -10,7 +10,8 @@ block content
 					.card.mb-3
 						picture(data-ng-if="rec.images&&rec.images.length>0")
 							source(type="image/webp",data-ng-srcset="/images/"+root+"/{{rec._id+'/'+rec.images[0].webp}}")
-							img.card-img-top.p-2(data-ng-src="/images/"+root+"/{{rec._id+'/'+rec.images[0].filename}}")
+							source(type="image/png",data-ng-srcset="/images/"+root+"/{{rec._id+'/'+rec.images[0].png}}")
+							img.card-img-top.p-2(data-ng-src="/images/"+root+"/{{rec._id+'/'+rec.images[0].jpg}}")
 						.text-center(data-ng-if="!rec.images||rec.images.length==0")
 							i.fas.fa-cubes.fa-3x.mt-4
 						.card-body

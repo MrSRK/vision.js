@@ -55,9 +55,9 @@ exports.signIn=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.signIn(Model,req,res,name,(error,data)=>
+		return coreController.signIn(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -69,9 +69,9 @@ exports.signUp=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.signUp(Model,req,res,name,(error,data)=>
+		return coreController.signUp(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -83,9 +83,9 @@ exports.signOut=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.signOut(Model,req,res,name,(error,data)=>
+		return coreController.signOut(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -97,9 +97,9 @@ exports.getList=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.getList(Model,req,res,name,(error,data)=>
+		return coreController.getList(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -111,9 +111,9 @@ exports.getSingle=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.getSingle(Model,req,res,name,(error,data)=>
+		return coreController.getSingle(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -125,9 +125,9 @@ exports.getListAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.getListAuth(Model,req,res,name,(error,data)=>
+		return coreController.getListAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -139,9 +139,9 @@ exports.getSingleAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.getSingleAuth(Model,req,res,name,(error,data)=>
+		return coreController.getSingleAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -153,9 +153,9 @@ exports.setSingleAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.setSingleAuth(Model,req,res,name,(error,data)=>
+		return coreController.setSingleAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -167,9 +167,9 @@ exports.updateSingleAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.updateSingleAuth(Model,req,res,name,(error,data)=>
+		return coreController.updateSingleAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -181,9 +181,9 @@ exports.updateSinglePasswordAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.updateSinglePasswordAuth(Model,req,res,name,(error,data)=>
+		return coreController.updateSinglePasswordAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -195,9 +195,9 @@ exports.deleteSingleAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.deleteSingleAuth(Model,req,res,name,(error,data)=>
+		return coreController.deleteSingleAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -209,9 +209,9 @@ exports.updateSingleImageAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.updateSingleImageAuth(Model,req,res,name,(error,data)=>
+		return coreController.updateSingleImageAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)
@@ -223,9 +223,9 @@ exports.deleteSingleImageAuth=(req,res,name,next)=>
 {
 	try
 	{
-		return coreController.deleteSingleImageAuth(Model,req,res,name,(error,data)=>
+		return coreController.deleteSingleImageAuth(Model,req,res,name,(error,data,ld)=>
 		{
-			return next(error,data)
+			return next(error,data,ld)
 		})
 	}
 	catch(error)

@@ -65,66 +65,6 @@ block content
 										source(type="image/webp",data-ng-srcset="/images/"+root+"/"+_id+"/{{image.webp}}")
 										source(type="image/png",data-ng-srcset="/images/"+root+"/"+_id+"/{{image.png}}")
 										img.img-fluid(data-ng-src="/images/"+root+"/"+_id+"/{{image.jpg}}")
-				else
-					.row
-						.col-6
-							.form-group(data-ng-init="loadAside('"+name+"')")
-								label.text-capitalize.small.text-secondary(for='form-'+name)=name
-								.input-group
-									select.form-control(id='form-'+name,data-ng-model="tmp."+name)
-										option(data-ng-repeat="rec in asideData."+name,data-ng-value="rec",selected="selected")
-											| {{rec.name}}
-											| {{rec.color[0]?' ('+rec.color[0].name+')':''}}
-											| {{rec.fabric[0]?' ('+rec.fabric[0].name+')':''}}
-									.input-group-append
-										button.btn.btn-primary(type="button",data-ng-click="data."+name+"=tmp."+name+"?data."+name+".concat(tmp."+name+"):data."+name) Insert
-						.col-6
-							.row
-								.col.col-lg-3.mb-3(data-ng-repeat="rec in data."+name+"  track by $index")
-									.card
-										button.btn.btn-sm.btn-link.position-absolute.m-1.mt-4(type="button",data-ng-click="data."+name+".splice($index,1)")
-											i.fas.fa-trash-alt.text-danger
-										button.btn.btn-sm.btn-link.position-absolute.m-1(type="button",data-ng-click="loadSubdocumentShcemaModal('"+name+"',$index)")
-											i.fas.fa-edit.text-primary
-										picture(data-ng-if="rec.images&&rec.images.length>0")
-											source(type="image/webp",data-ng-srcset="/images/"+name+"/{{rec._id+'/'+rec.images[0].webp}}")
-											img.card-img-top.p-2(data-ng-src="/images/"+name+"/{{rec._id+'/'+rec.images[0].filename}}")
-										.text-center(data-ng-if="!rec.images||rec.images.length==0")
-											i.fas.fa-cubes.fa-3x.mt-4
-										.card-body.py-2
-											.text-center.small(data-ng-if="rec.code")
-												abbr.small.text-muted(data-ng-bind="rec.code",title="{{rec.name}}")
-											.text-center.small(data-ng-if="!rec.code",data-ng-bind="rec.name")
-			else if field.type=='object'
-				.form-group(data-ng-if="data."+name)
-					label.text-capitalize.small.text-secondary(for='form-'+name)=name
-					.input-group
-						label.form-control.small.text-secondary(id='form-'+name,data-ng-bind="data."+name+".name")
-						.input-group-append
-							button.btn.btn-link.btn-sm(type="button",data-ng-click="deleteAsideOnData('"+name+"')")
-								i.fas.fa-trash-alt.text-danger.mr-1
-								strong.text-danger='Remove '+name
-					.border.p-2.my-2
-						.row
-							.col-10
-								.text-left.small(data-ng-if="data."+name+".name")
-									strong.mr-1 Name:
-									sman(data-ng-bind="data."+name+".name")
-								.text-left.small(data-ng-if="data."+name+".color.name")
-									strong.mr-1 Color:
-									sman(data-ng-bind="data."+name+".color.name")
-								.text-left.small(data-ng-if="data."+name+".code")
-									strong.mr-1 Code:
-									sman(data-ng-bind="data."+name+".code")
-							.col-1.text-right
-								img.img-fluid(data-ng-if="data."+name+".images&&data."+name+".images[0]",data-ng-src="/images/"+name+"/{{data."+name+"._id}}/{{data."+name+".images[0].webp}}")
-							.col-1.text-right
-								img.img-fluid(data-ng-if="data."+name+".color&&data."+name+".color.images&&data."+name+".color.images[0]",data-ng-src="/images/color/{{data."+name+".color._id}}/{{data."+name+".color.images[0].webp}}")
-				.form-group(data-ng-if="!data."+name,data-ng-init="loadAside('"+name+"')")
-					label.text-capitalize.font-weight-bold.text-danger(for='form-'+name)=name+" value is empty Set "+name
-					select.form-control(id='form-'+name,data-ng-model="data."+name)
-						option
-						option(data-ng-if="asideData."+name,data-ng-repeat="temp in asideData."+name,data-ng-value="temp") {{temp.name}}
 			else if field.type=='number'
 				.row
 					.col-12.col-lg-3
@@ -149,18 +89,3 @@ block content
 			button.btn.btn-primary(type='submit',ng-disabled="disabled")
 				i.fas.fa-save.mr-2
 				span Save
-
-
-	// ##############################################
-	// This is the modela for edit sub document
-	// ##############################################
-
-	#subDocumentModal.modal(tabindex='-1', role='dialog')
-		.modal-dialog.modal-xl(role='document')
-			.modal-content
-				.modal-header
-					h5.modal-title Modal title
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
-						span(aria-hidden='true') ×
-				.modal-body(data-ng-include="subDocumentPath")
-					

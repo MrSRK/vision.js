@@ -122,6 +122,7 @@ app.controller("page-handler",['$scope','$http','$interval',($scope,$http,$inter
 		.then(response=>
 		{
 			$scope.data=response.data.data
+			$scope.ld=response.data.ld
 			setMessage('alert-info','Info','Operation complete')
 			if(response.data.token)
 				parseToken(response.data)
@@ -164,6 +165,7 @@ app.controller("page-handler",['$scope','$http','$interval',($scope,$http,$inter
 		.then(response=>
 		{
 			$scope.data=response.data.data
+			$scope.ld=response.data.ld
 			setMessage('alert-info','Info','Operation complete')
 			$scope.disabled=false
 			if(response.data.token)
@@ -481,7 +483,6 @@ app.controller("page-handler",['$scope','$http','$interval',($scope,$http,$inter
 			localStorage.setItem('userTimer',JSON.stringify($scope.user))
 		}
 	}
-	
 	/**
 	 *
 	 */
@@ -503,6 +504,7 @@ app.controller("page-handler",['$scope','$http','$interval',($scope,$http,$inter
 	 * Initialise $scope
 	 */
 	$scope.data={}
+	$scope.ld={}
 	$scope.asideData={}
 	$scope.msg={}
 	/**

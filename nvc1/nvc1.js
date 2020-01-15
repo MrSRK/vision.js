@@ -4,8 +4,12 @@ const chalk=require('chalk')
 const path=require('path')
 const express=require('express')
 const pug=require('pug')
+const http2=require('http2')
+const fs=require('fs')
+const mime=require('mime-types')
+
 const errorhandler=require('./errorhandler')
-const logger=require('./logger')
+const log=require('./log')
 const bodyParser=require('./parser')
 const session=require('./session')
 const cookie=require('./cookie')
@@ -14,6 +18,7 @@ const database=require('./database')
 const sass=require('./sass')
 const router=require('./router')
 const view=require('./view')
+
 /**
  * Set's Environment Variables From .env File
  */
@@ -32,6 +37,15 @@ const run=next=>
 		console.group(chalk.yellow('# Loading Express [Core] Modules'))
 		const app=new express();
 		/**
+		 * Set Looger
+		*/
+		log.setLoger((error,morgan)=>
+		{
+			if(error)
+				throw error
+			return app.use(morgan)
+		})
+		/**
 		 * Set Error Handler
 		*/
 		errorhandler.handler((error,handler)=>
@@ -41,15 +55,6 @@ const run=next=>
 			if(handler)
 				return app.use(handler())
 			return false
-		})
-		/**
-		 * Set Looger
-		*/
-		logger.setLoger((error,morgan)=>
-		{
-			if(error)
-				throw error
-			return app.use(morgan)
 		})
 		/**
 		 * Set Parser
@@ -91,7 +96,7 @@ const run=next=>
 		{
 			if(process.env.NODE_ENV!=='development')
 				if(req.path!=='/public/images')
-					security.csrf()(req,res,n)
+					security.csrf({angular:true})(req,res,n)
 				else
 					return n()
 			else
@@ -107,6 +112,7 @@ const run=next=>
 		{
 			if(error)
 				throw(error)
+			console.log('%s  Database connection',chalk.green('[succses]'))
 		})
 		/**
 		 * Use Sass Module
@@ -122,13 +128,17 @@ const run=next=>
 		 * Set Static files path
 		 */
 		app.use('/',express.static(path.join(__dirname,'../public')))
-		app.use('/images',express.static(path.join(__dirname,'../uploads/images')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/angular')))
+		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/angular-sanitize')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/popper.js/dist/umd')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/bootstrap/dist/js')))
 		app.use('/js/lib',express.static(path.join(__dirname,'../node_modules/jquery/dist')))
 		app.use('/webfonts',express.static(path.join(__dirname,'../node_modules/@fortawesome/fontawesome-free/webfonts')))
 		app.use('/favicon.ico',express.static(path.join(__dirname,'../public/images/favicon.ico')))
+		/**
+		 * Static Images
+		 */
+		app.use('/images',express.static(path.join(__dirname,'../uploads/images')))
 		/**
 		 * Static manifest
 		 */
@@ -143,16 +153,11 @@ const run=next=>
 			res.write('/js/lib/popper.min.js\n')
 			res.write('/js/lib/bootstrap.min.js\n')
 			res.write('/js/lib/angular.min.js\n')
-			res.write('/js/main.js\n')
+			//res.write('/js/main.js\n')
 			res.write('/favicon.ico\n')
 			res.write('/webfonts/fa-solid-900.woff2\n')
-
-			res.write('/\n')
-			res.write('/customer\n')
-
 			res.end()
 		})
-
 		/**
 		 * Routs
 		 */
