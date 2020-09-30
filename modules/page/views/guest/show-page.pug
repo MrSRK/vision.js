@@ -1,0 +1,54 @@
+extends ../../../../views/layout
+block content
+	.mt-5(data-ng-init="setRoute('"+root+"')")
+		div(data-ng-init="getSingle('"+_id+"')")
+			.row
+				.col.col-lg-3.px-5
+					a(data-ng-if="data.images&&data.images.length>0",data-toggle="modal" href="#page-image-modal")
+						picture
+							source(type="image/webp",data-ng-srcset="/images/"+root+"/{{data._id+'/'+data.images[0].webp}}")
+							source(type="image/png",data-ng-srcset="/images/"+root+"/{{data._id+'/'+data.images[0].png}}")
+							img.img-fluid(data-ng-src="/images/"+root+"/{{data._id+'/'+data.images[0].jpg}}")
+					#page-image-modal.modal(tabindex='-1', role='dialog')
+						.modal-dialog.modal-lg(role='document')
+							.modal-content
+								.modal-header
+									span.modal-title Image Preview
+									button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') ×
+								.modal-body
+									#image-preview-carousel.carousel
+										.carousel-inner
+											.carousel-item(data-ng-repeat="image in data.images",data-ng-class="$index?'':'active'")
+												picture
+													source(type="image/webp",data-ng-srcset="/images/"+root+"/{{data._id+'/'+image.webp}}")
+													source(type="image/png",data-ng-srcset="/images/"+root+"/{{data._id+'/'+image.png}}")
+													img.img-fluid(data-ng-src="/images/"+root+"/{{data._id+'/'+image.jpg}}")
+										a.carousel-control-prev(href='#image-preview-carousel', role='button', data-slide='prev',data-ng-if="data.images.length>1")
+											span.carousel-control-prev-icon(aria-hidden='true')
+											span.sr-only Previous
+										a.carousel-control-next(href='#image-preview-carousel', role='button', data-slide='next',data-ng-if="data.images.length>1")
+											span.carousel-control-next-icon(aria-hidden='true')
+											span.sr-only Next
+					.text-right(data-ng-if="data.images.length>1")
+						.row.mt-2
+							.col.col-md-4.mx-1.p-0(data-ng-repeat="image in data.images")
+								.card
+									a(href="#page-image-modal" data-target="#page-image-modal" data-toggle="modal" data-slide="1")
+										picture
+											source(type="image/webp",data-ng-srcset="/images/"+root+"/{{data._id+'/'+image.webp}}")
+											source(type="image/png",data-ng-srcset="/images/"+root+"/{{data._id+'/'+image.png}}")
+											img.p-1.card-img-top(data-ng-src="/images/"+root+"/{{data._id+'/'+image.jpg}}")
+					.text-left
+						p.mb-0(data-ng-id="data.createdAt")
+							small.mr-3.text-muted Created At:
+							small(data-ng-bind="data.createdAt | date:'dd/MM/yyyy'")
+						p.mb-0(data-ng-id="data.updatedAt")
+							small.mr-3.text-muted Updated At:
+							small(data-ng-bind="data.updatedAt | date:'dd/MM/yyyy'")
+				.col.col-md-9
+					h1.text-primary.mb-5(data-ng-bind="data.title")
+					p(data-ng-if="data.description",data-ng-bind="data.description")
+					p.collapse.more-text-collapse(data-ng-if="data.text",data-ng-bind="data.text")
+					.text-right.more-text-collapse.collapse.show(data-ng-if="data.text")
+						button.btn.btn-primary(data-toggle='collapse', data-target='.more-text-collapse', role='button', aria-expanded='false', aria-controls='more-text-collapse') Περισσότερα

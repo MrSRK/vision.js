@@ -1,0 +1,7 @@
+extends ../layout
+block content
+	.mt-5(data-ng-init="setRoute('"+root+"')")
+		div(data-ng-init="getSingle('"+_id+"')")
+			.row
+				.col
+					h1 This is the page loader
