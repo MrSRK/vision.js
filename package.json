@@ -1,6 +1,6 @@
 {
 	"name": "cms-vision",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Υποτυπώδες CMS δομημένο σε Node.js για την ανάπτυξη μικρών εταιρικών σελίδων.",
 	"main": "app.js",
 	"scripts": {
